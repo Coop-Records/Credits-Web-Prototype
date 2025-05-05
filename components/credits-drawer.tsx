@@ -43,7 +43,7 @@ export default function CreditsDrawer() {
       </SheetTrigger>
       <SheetContent
         side="bottom"
-        className="rounded-t-xl px-0 max-w-md mx-auto [&>button]:hidden"
+        className="rounded-t-3xl px-0 max-w-md mx-auto [&>button]:hidden"
       >
         <div className="px-6">
           <SheetHeader className="text-center">
@@ -53,13 +53,13 @@ export default function CreditsDrawer() {
             <div className="flex items-center justify-center gap-2 text-gray-500 mt-4">
               Balance : <PlusIcon className="h-5 w-5" /> {balance}
             </div>
-            <p className="text-center mt-6 text-2xl font-normal text-gray-600">
+            <p className="text-center mt-6 text-2xl font-normal text-gray-500">
               Each song costs 1 credit.
             </p>
           </SheetHeader>
         </div>
 
-        <div className="mt-8 px-6 space-y-4">
+        <div className="px-6 space-y-4">
           {creditOptions.map((option) => (
             <button
               key={option.amount}
@@ -68,7 +68,7 @@ export default function CreditsDrawer() {
             >
               <div className="flex items-center">
                 <PlusIcon className="h-6 w-6 mr-2" />
-                <span className="text-lg">{option.amount}</span>
+                <span className="text-lg text-gray-500">{option.amount}</span>
               </div>
               <span className="text-lg text-gray-500">
                 ${option.price.toFixed(2)}
