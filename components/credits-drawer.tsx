@@ -47,13 +47,13 @@ export default function CreditsDrawer() {
       >
         <div className="px-6">
           <SheetHeader className="text-center">
-            <h2 className="text-2xl font-bold text-gray-800 text-center">
+            <h2 className="text-lg font-bold text-gray-800 text-center">
               Top up with Credits
             </h2>
             <div className="flex items-center justify-center gap-2 text-gray-500 mt-4">
               Balance : <PlusIcon className="h-5 w-5" /> {balance}
             </div>
-            <p className="text-center mt-6 text-2xl font-normal text-gray-500">
+            <p className="text-center mt-6 font-bold text-gray-500">
               Each song costs 1 credit.
             </p>
           </SheetHeader>
@@ -68,11 +68,9 @@ export default function CreditsDrawer() {
             >
               <div className="flex items-center">
                 <PlusIcon className="h-6 w-6 mr-2" />
-                <span className="text-lg text-gray-500">{option.amount}</span>
+                <span className="text-gray-500">{option.amount}</span>
               </div>
-              <span className="text-lg text-gray-500">
-                ${option.price.toFixed(2)}
-              </span>
+              <span className="text-gray-500">${option.price.toFixed(2)}</span>
             </button>
           ))}
           <div className="h-8"></div>
