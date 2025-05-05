@@ -64,7 +64,7 @@ export default function CreditsDrawer() {
             <button
               key={option.amount}
               onClick={() => handlePurchase(option.amount)}
-              className="w-full bg-gray-100 hover:bg-gray-200 hover:scale-[1.02] transition-all duration-200 rounded-lg py-4 px-6 flex items-center justify-between"
+              className="w-full bg-gray-100 hover:bg-gray-200 hover:scale-[1.02] transition-all duration-200 rounded-lg py-6 px-6 flex items-center justify-between"
             >
               <div className="flex items-center">
                 <PlusIcon className="h-6 w-6 mr-2" />
