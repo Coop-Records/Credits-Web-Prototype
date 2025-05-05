@@ -53,7 +53,7 @@ export default function CreditsDrawer() {
             <div className="flex items-center justify-center gap-2 text-gray-500 mt-4">
               Balance : <PlusIcon className="h-5 w-5" /> {balance}
             </div>
-            <p className="text-center mt-6 font-bold text-gray-500">
+            <p className="text-center mt-6 text-gray-500">
               Each song costs 1 credit.
             </p>
           </SheetHeader>
