@@ -75,6 +75,7 @@ export default function CreditsDrawer() {
               </span>
             </button>
           ))}
+          <div className="h-8"></div>
         </div>
       </SheetContent>
     </Sheet>
