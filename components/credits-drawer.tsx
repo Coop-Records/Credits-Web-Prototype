@@ -10,6 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "./plus-icon";
 import { usePrivy } from "@privy-io/react-auth";
+import CrossmintModal from "./crossmint-modal";
 
 interface CreditOption {
   amount: number;
@@ -19,6 +20,7 @@ interface CreditOption {
 export default function CreditsDrawer() {
   const [isOpen, setIsOpen] = useState(false);
   const [balance, setBalance] = useState(0);
+  const [isOpenCrossmint, setIsOpenCrossmint] = useState(false);
   const { authenticated, ready, login } = usePrivy();
 
   const creditOptions: CreditOption[] = [
@@ -28,6 +30,7 @@ export default function CreditsDrawer() {
   ];
 
   const handlePurchase = (amount: number) => {
+    setIsOpenCrossmint(true);
     // In a real app, this would trigger a payment process
     // For demo purposes, we'll just update the balance
     setBalance((prev) => prev + amount);
@@ -86,6 +89,14 @@ export default function CreditsDrawer() {
           <div className="h-8"></div>
         </div>
       </SheetContent>
+      {isOpenCrossmint && (
+        <CrossmintModal
+          onClose={() => {
+            setIsOpenCrossmint(false);
+            setIsOpen(false);
+          }}
+        />
+      )}
     </Sheet>
   );
 }
