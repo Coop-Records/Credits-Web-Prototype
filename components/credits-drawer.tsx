@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "./plus-icon";
+import { usePrivy } from "@privy-io/react-auth";
 
 interface CreditOption {
   amount: number;
@@ -18,6 +19,7 @@ interface CreditOption {
 export default function CreditsDrawer() {
   const [isOpen, setIsOpen] = useState(false);
   const [balance, setBalance] = useState(0);
+  const { authenticated, ready, login } = usePrivy();
 
   const creditOptions: CreditOption[] = [
     { amount: 5, price: 1.44 },
@@ -33,8 +35,16 @@ export default function CreditsDrawer() {
     // setIsOpen(false)
   };
 
+  const handleOpenChange = (open: boolean) => {
+    if (!authenticated && ready) {
+      login();
+      return;
+    }
+    setIsOpen(open);
+  };
+
   return (
-    <Sheet open={isOpen} onOpenChange={setIsOpen}>
+    <Sheet open={isOpen} onOpenChange={handleOpenChange}>
       <SheetTrigger asChild>
         <Button variant="outline" className="flex items-center gap-2">
           <PlusIcon className="h-4 w-4" />
