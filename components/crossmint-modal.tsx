@@ -1,6 +1,5 @@
 import { CrossmintEmbeddedCheckout } from "@crossmint/client-sdk-react-ui";
 import { usePrivy } from "@privy-io/react-auth";
-import { Address } from "viem";
 
 interface CrossmintModalProps {
   onClose: () => void;
@@ -40,7 +39,7 @@ export default function CrossmintModal({ onClose }: CrossmintModalProps) {
             }}
             recipient={
               address
-                ? { walletAddress: address as Address }
+                ? { walletAddress: address }
                 : { email: email?.address ?? "" }
             }
           />
