@@ -21,6 +21,7 @@ export default function CreditsDrawer() {
   const [isOpen, setIsOpen] = useState(false);
   const [balance, setBalance] = useState(0);
   const [isOpenCrossmint, setIsOpenCrossmint] = useState(false);
+  const [selectedQuantity, setSelectedQuantity] = useState<number>(1);
   const { authenticated, ready, login } = usePrivy();
 
   const creditOptions: CreditOption[] = [
@@ -30,6 +31,7 @@ export default function CreditsDrawer() {
   ];
 
   const handlePurchase = (amount: number) => {
+    setSelectedQuantity(amount);
     setIsOpenCrossmint(true);
     // In a real app, this would trigger a payment process
     // For demo purposes, we'll just update the balance
@@ -39,7 +41,8 @@ export default function CreditsDrawer() {
   };
 
   const handleOpenChange = (open: boolean) => {
-    if (!authenticated && ready) {
+    if (!ready) return;
+    if (!authenticated) {
       login();
       return;
     }
@@ -49,7 +52,11 @@ export default function CreditsDrawer() {
   return (
     <Sheet open={isOpen} onOpenChange={handleOpenChange}>
       <SheetTrigger asChild>
-        <Button variant="outline" className="flex items-center gap-2">
+        <Button
+          disabled={!ready}
+          variant="outline"
+          className="flex items-center gap-2"
+        >
           <PlusIcon className="h-4 w-4" />
           <span>Top up Credits</span>
         </Button>
@@ -93,8 +100,8 @@ export default function CreditsDrawer() {
         <CrossmintModal
           onClose={() => {
             setIsOpenCrossmint(false);
-            setIsOpen(false);
           }}
+          quantity={selectedQuantity}
         />
       )}
     </Sheet>
