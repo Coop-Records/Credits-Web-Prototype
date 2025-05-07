@@ -8,8 +8,8 @@ Welcome to the Coop Credits Demo! This app lets you top up credits to listen to 
 - **Tech Stack:** Next.js, ShadCN UI, Privy, Crossmint
 - **How it works:**
   - Log in securely with Privy
-  - Purchase credits using Crossmint
-  - Use credits to play songs (1 credit = 1 song)
+  - Purchase credits with credit card, apple pay or google pay using Crossmint
+  - Use credits to buy songs (1 credit = 1 song)
 
 ## 🗂️ Project Structure
 
