@@ -1,6 +1,6 @@
 # 🎵 Coop Credits
 
-Welcome to the Coop Credits Demo! This app lets you top up credits to listen to music, with each song costing 1 credit. Built with Next.js, ShadCN UI, Privy for authentication, and Crossmint for payments.
+This app lets you top up credits to purchase music from Coop Recs, with each song costing 1 credit. Built with Next.js, ShadCN UI, Privy for authentication, and Crossmint for payments.
 
 <img width="439" alt="Screenshot 2025-05-07 at 10 34 01 AM" src="https://github.com/user-attachments/assets/35399fe4-1149-4006-9922-2f18b27e6abf" />
 
