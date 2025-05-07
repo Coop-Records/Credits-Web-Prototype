@@ -1,5 +1,17 @@
-import { CrossmintEmbeddedCheckout } from "@crossmint/client-sdk-react-ui";
 import { usePrivy } from "@privy-io/react-auth";
+import dynamic from "next/dynamic";
+import SkeletonCrossmint from "./skeleton-crossmint";
+
+const CrossmintEmbeddedCheckout = dynamic(
+  () =>
+    import("@crossmint/client-sdk-react-ui").then(
+      (mod) => mod.CrossmintEmbeddedCheckout
+    ),
+  {
+    ssr: false,
+    loading: () => <SkeletonCrossmint />,
+  }
+);
 
 interface CrossmintModalProps {
   onClose: () => void;
@@ -22,7 +34,7 @@ export default function CrossmintModal({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999]">
-      <div className="bg-white p-6 rounded-lg relative">
+      <div className="bg-white p-6 rounded-lg relative min-w-[320px] min-h-[320px] flex flex-col items-center justify-center">
         <button
           onClick={onClose}
           className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
