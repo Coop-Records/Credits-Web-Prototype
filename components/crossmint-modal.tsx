@@ -3,17 +3,21 @@ import { usePrivy } from "@privy-io/react-auth";
 
 interface CrossmintModalProps {
   onClose: () => void;
+  quantity: number;
 }
 
-export default function CrossmintModal({ onClose }: CrossmintModalProps) {
+export default function CrossmintModal({
+  onClose,
+  quantity,
+}: CrossmintModalProps) {
   const { user } = usePrivy();
   const { email } = user ?? { email: null };
   const { address } = user?.wallet ?? { address: null };
   const collectionLocator = `crossmint:${process.env.NEXT_PUBLIC_CROSSMINT_COLLECTION_ID}`;
   const callData = {
     account: address,
-    amount: 1,
-    totalPrice: "0.0004",
+    amount: quantity,
+    totalPrice: (0.0004 * quantity).toString(),
   };
 
   return (
