@@ -24,6 +24,7 @@ credits-web-prototype/
 │   ├── crossmint-modal.tsx
 │   ├── credits-drawer.tsx
 │   ├── credit-options.tsx
+│   ├── skeleton-crossmint.tsx
 │   ├── plus-icon.tsx
 │   └── ui/
 │       ├── button.tsx
