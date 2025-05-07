@@ -12,11 +12,7 @@ import { PlusIcon } from "./plus-icon";
 import { usePrivy } from "@privy-io/react-auth";
 import CrossmintModal from "./crossmint-modal";
 import { useEthPrice } from "@/hooks/useEthPrice";
-
-interface CreditOption {
-  amount: number;
-  price: number;
-}
+import { CreditOptions } from "./credit-options";
 
 export default function CreditsDrawer() {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,12 +21,6 @@ export default function CreditsDrawer() {
   const [selectedQuantity, setSelectedQuantity] = useState<number>(1);
   const { authenticated, ready, login } = usePrivy();
   const { ethPrice } = useEthPrice();
-
-  const creditOptions: CreditOption[] = [
-    { amount: 5, price: 1.44 },
-    { amount: 25, price: 4.52 },
-    { amount: 100, price: 16.08 },
-  ];
 
   const handlePurchase = (amount: number) => {
     setSelectedQuantity(amount);
@@ -48,6 +38,12 @@ export default function CreditsDrawer() {
     }
     setIsOpen(open);
   };
+
+  const creditOptions = [
+    { amount: 5, price: 1.44 },
+    { amount: 25, price: 4.52 },
+    { amount: 100, price: 16.08 },
+  ];
 
   return (
     <Sheet open={isOpen} onOpenChange={handleOpenChange}>
@@ -78,30 +74,11 @@ export default function CreditsDrawer() {
             </p>
           </SheetHeader>
         </div>
-
-        <div className="px-6 space-y-4">
-          {creditOptions.map((option) => (
-            <button
-              key={option.amount}
-              onClick={() => handlePurchase(option.amount)}
-              className="w-full bg-gray-100 hover:bg-gray-200 hover:scale-[1.02] transition-all duration-200 rounded-lg py-6 px-6 flex items-center justify-between"
-            >
-              <div className="flex items-center">
-                <PlusIcon className="h-6 w-6 mr-2" />
-                <span className="text-gray-500">{option.amount}</span>
-              </div>
-              <span className="text-gray-500">
-                ${option.price.toFixed(2)}
-                {ethPrice && (
-                  <span className="ml-2 text-xs text-gray-400">
-                    ({(option.price / ethPrice).toFixed(6)} ETH)
-                  </span>
-                )}
-              </span>
-            </button>
-          ))}
-          <div className="h-8"></div>
-        </div>
+        <CreditOptions
+          creditOptions={creditOptions}
+          ethPrice={ethPrice}
+          onSelect={handlePurchase}
+        />
       </SheetContent>
       {isOpenCrossmint && (
         <CrossmintModal

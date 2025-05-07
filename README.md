@@ -4,7 +4,6 @@ This app lets you top up credits to purchase music from Coop Recs, with each son
 
 <img width="439" alt="Screenshot 2025-05-07 at 10 34 01 AM" src="https://github.com/user-attachments/assets/35399fe4-1149-4006-9922-2f18b27e6abf" />
 
-
 ## 🚀 Overview
 
 - **Purpose:** Quickly top up your account with credits to enjoy your favorite songs.
@@ -24,6 +23,7 @@ credits-web-prototype/
 ├── components/
 │   ├── crossmint-modal.tsx
 │   ├── credits-drawer.tsx
+│   ├── credit-options.tsx
 │   ├── plus-icon.tsx
 │   └── ui/
 │       ├── button.tsx
@@ -33,6 +33,8 @@ credits-web-prototype/
 │   └── PrivyProvider.tsx
 ├── public/
 │   └── plus-icon.png
+├── hooks/
+│   └── useEthPrice.ts
 ├── README.md
 ├── package.json
 ├── pnpm-lock.yaml
