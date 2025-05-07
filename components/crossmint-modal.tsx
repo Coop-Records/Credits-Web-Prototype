@@ -9,14 +9,12 @@ export default function CrossmintModal({ onClose }: CrossmintModalProps) {
   const { user } = usePrivy();
   const { email } = user ?? { email: null };
   const { address } = user?.wallet ?? { address: null };
+  const collectionLocator = `crossmint:${process.env.NEXT_PUBLIC_CROSSMINT_COLLECTION_ID}`;
   const callData = {
     account: address,
     amount: 1,
     totalPrice: "0.0004",
   };
-
-  const baseSepoliaCollectionId = "54b397c6-0e56-4404-bcda-876a338e29e5";
-  const collectionLocator = `crossmint:${baseSepoliaCollectionId}`;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999]">
