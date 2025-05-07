@@ -2,7 +2,7 @@ import { PlusIcon } from "./plus-icon";
 
 interface CreditOption {
   amount: number;
-  price: number;
+  price: number | null;
 }
 
 interface CreditOptionsProps {
@@ -29,10 +29,14 @@ export function CreditOptions({
             <span className="text-gray-500">{option.amount}</span>
           </div>
           <span className="text-gray-500">
-            ${option.price.toFixed(2)}
+            ${option.price?.toFixed(2) || "N/A"}
             {ethPrice && (
               <span className="ml-2 text-xs text-gray-400">
-                ({(option.price / ethPrice).toFixed(6)} ETH)
+                (
+                {option.price && option.price / ethPrice
+                  ? (option.price / ethPrice).toFixed(6)
+                  : "N/A"}{" "}
+                ETH)
               </span>
             )}
           </span>

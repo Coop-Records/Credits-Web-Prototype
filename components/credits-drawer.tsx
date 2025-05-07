@@ -22,6 +22,12 @@ export default function CreditsDrawer() {
   const { authenticated, ready, login } = usePrivy();
   const { ethPrice } = useEthPrice();
 
+  const CROSSMINT_MARKUP = 1.05;
+  const creditOptions = [5, 25, 100].map((amount) => ({
+    amount,
+    price: ethPrice ? 0.0004 * ethPrice * amount * CROSSMINT_MARKUP : null,
+  }));
+
   const handlePurchase = (amount: number) => {
     setSelectedQuantity(amount);
     setIsOpenCrossmint(true);
@@ -38,12 +44,6 @@ export default function CreditsDrawer() {
     }
     setIsOpen(open);
   };
-
-  const creditOptions = [
-    { amount: 5, price: 1.44 },
-    { amount: 25, price: 4.52 },
-    { amount: 100, price: 16.08 },
-  ];
 
   return (
     <Sheet open={isOpen} onOpenChange={handleOpenChange}>
