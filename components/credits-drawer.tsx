@@ -41,7 +41,8 @@ export default function CreditsDrawer() {
   };
 
   const handleOpenChange = (open: boolean) => {
-    if (!authenticated && ready) {
+    if (!ready) return;
+    if (!authenticated) {
       login();
       return;
     }
@@ -51,7 +52,11 @@ export default function CreditsDrawer() {
   return (
     <Sheet open={isOpen} onOpenChange={handleOpenChange}>
       <SheetTrigger asChild>
-        <Button variant="outline" className="flex items-center gap-2">
+        <Button
+          disabled={!ready}
+          variant="outline"
+          className="flex items-center gap-2"
+        >
           <PlusIcon className="h-4 w-4" />
           <span>Top up Credits</span>
         </Button>
