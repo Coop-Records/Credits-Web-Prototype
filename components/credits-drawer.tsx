@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { PlusIcon } from "./plus-icon";
 import { usePrivy } from "@privy-io/react-auth";
 import CrossmintModal from "./crossmint-modal";
+import { useEthPrice } from "@/hooks/useEthPrice";
 
 interface CreditOption {
   amount: number;
@@ -23,6 +24,7 @@ export default function CreditsDrawer() {
   const [isOpenCrossmint, setIsOpenCrossmint] = useState(false);
   const [selectedQuantity, setSelectedQuantity] = useState<number>(1);
   const { authenticated, ready, login } = usePrivy();
+  const { ethPrice } = useEthPrice();
 
   const creditOptions: CreditOption[] = [
     { amount: 5, price: 1.44 },
@@ -36,8 +38,6 @@ export default function CreditsDrawer() {
     // In a real app, this would trigger a payment process
     // For demo purposes, we'll just update the balance
     setBalance((prev) => prev + amount);
-    // Close the drawer after purchase (optional)
-    // setIsOpen(false)
   };
 
   const handleOpenChange = (open: boolean) => {
@@ -90,7 +90,14 @@ export default function CreditsDrawer() {
                 <PlusIcon className="h-6 w-6 mr-2" />
                 <span className="text-gray-500">{option.amount}</span>
               </div>
-              <span className="text-gray-500">${option.price.toFixed(2)}</span>
+              <span className="text-gray-500">
+                ${option.price.toFixed(2)}
+                {ethPrice && (
+                  <span className="ml-2 text-xs text-gray-400">
+                    ({(option.price / ethPrice).toFixed(6)} ETH)
+                  </span>
+                )}
+              </span>
             </button>
           ))}
           <div className="h-8"></div>
