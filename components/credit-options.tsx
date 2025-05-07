@@ -23,9 +23,7 @@ export function CreditOptions({ creditOptions, onSelect }: CreditOptionsProps) {
             <PlusIcon className="h-6 w-6 mr-2" />
             <span className="text-gray-500">{option.amount}</span>
           </div>
-          <span className="text-gray-500">
-            ${option.price?.toFixed(2) || "N/A"}
-          </span>
+          <span className="text-gray-500">${option.price || "N/A"}</span>
         </button>
       ))}
       <div className="h-8"></div>
