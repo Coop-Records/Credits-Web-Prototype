@@ -25,7 +25,9 @@ export default function CreditsDrawer() {
   const CROSSMINT_MARKUP = 1.05;
   const creditOptions = [5, 25, 100].map((amount) => ({
     amount,
-    price: ethPrice ? 0.0004 * ethPrice * amount * CROSSMINT_MARKUP : null,
+    price: ethPrice
+      ? Math.ceil(0.0004 * ethPrice * amount * CROSSMINT_MARKUP)
+      : null,
   }));
 
   const handlePurchase = (amount: number) => {
