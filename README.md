@@ -39,8 +39,8 @@ credits-web-prototype/
 
 1. **Clone the repo:**
    ```bash
-   git clone https://github.com/your-org/credits-web-prototype.git
-   cd credits-web-prototype
+   git clone https://github.com/Coop-Records/Credits-Web-Prototype.git
+   cd Credits-Web-Prototype
    ```
 2. **Install dependencies:**
    ```bash
