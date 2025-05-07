@@ -84,3 +84,9 @@ Check out the live app: [https://coop-credits.vercel.app/](https://coop-credits.
 - [ShadCN UI](https://ui.shadcn.com/)
 - [Privy](https://privy.io/)
 - [Crossmint](https://www.crossmint.com/)
+
+---
+
+## 📝 License
+
+This project is licensed under the [MIT License](./LICENSE) by Coop Records.
