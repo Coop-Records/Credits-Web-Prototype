@@ -76,7 +76,6 @@ export default function CreditsDrawer() {
         </div>
         <CreditOptions
           creditOptions={creditOptions}
-          ethPrice={ethPrice}
           onSelect={handlePurchase}
         />
       </SheetContent>

@@ -7,15 +7,10 @@ interface CreditOption {
 
 interface CreditOptionsProps {
   creditOptions: CreditOption[];
-  ethPrice: number | null;
   onSelect: (amount: number) => void;
 }
 
-export function CreditOptions({
-  creditOptions,
-  ethPrice,
-  onSelect,
-}: CreditOptionsProps) {
+export function CreditOptions({ creditOptions, onSelect }: CreditOptionsProps) {
   return (
     <div className="px-6 space-y-4">
       {creditOptions.map((option) => (
@@ -30,15 +25,6 @@ export function CreditOptions({
           </div>
           <span className="text-gray-500">
             ${option.price?.toFixed(2) || "N/A"}
-            {ethPrice && (
-              <span className="ml-2 text-xs text-gray-400">
-                (
-                {option.price && option.price / ethPrice
-                  ? (option.price / ethPrice).toFixed(6)
-                  : "N/A"}{" "}
-                ETH)
-              </span>
-            )}
           </span>
         </button>
       ))}
