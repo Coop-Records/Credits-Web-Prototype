@@ -11,11 +11,8 @@ import { Button } from "@/components/ui/button";
 import { PlusIcon } from "./plus-icon";
 import { usePrivy } from "@privy-io/react-auth";
 import CrossmintModal from "./crossmint-modal";
-
-interface CreditOption {
-  amount: number;
-  price: number;
-}
+import { useEthPrice } from "@/hooks/useEthPrice";
+import { CreditOptions } from "./credit-options";
 
 export default function CreditsDrawer() {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,12 +20,15 @@ export default function CreditsDrawer() {
   const [isOpenCrossmint, setIsOpenCrossmint] = useState(false);
   const [selectedQuantity, setSelectedQuantity] = useState<number>(1);
   const { authenticated, ready, login } = usePrivy();
+  const { ethPrice } = useEthPrice();
 
-  const creditOptions: CreditOption[] = [
-    { amount: 5, price: 1.44 },
-    { amount: 25, price: 4.52 },
-    { amount: 100, price: 16.08 },
-  ];
+  const CROSSMINT_MARKUP = 1.05;
+  const creditOptions = [5, 25, 100].map((amount) => ({
+    amount,
+    price: ethPrice
+      ? Math.ceil(0.0004 * ethPrice * amount * CROSSMINT_MARKUP)
+      : null,
+  }));
 
   const handlePurchase = (amount: number) => {
     setSelectedQuantity(amount);
@@ -36,8 +36,6 @@ export default function CreditsDrawer() {
     // In a real app, this would trigger a payment process
     // For demo purposes, we'll just update the balance
     setBalance((prev) => prev + amount);
-    // Close the drawer after purchase (optional)
-    // setIsOpen(false)
   };
 
   const handleOpenChange = (open: boolean) => {
@@ -78,23 +76,10 @@ export default function CreditsDrawer() {
             </p>
           </SheetHeader>
         </div>
-
-        <div className="px-6 space-y-4">
-          {creditOptions.map((option) => (
-            <button
-              key={option.amount}
-              onClick={() => handlePurchase(option.amount)}
-              className="w-full bg-gray-100 hover:bg-gray-200 hover:scale-[1.02] transition-all duration-200 rounded-lg py-6 px-6 flex items-center justify-between"
-            >
-              <div className="flex items-center">
-                <PlusIcon className="h-6 w-6 mr-2" />
-                <span className="text-gray-500">{option.amount}</span>
-              </div>
-              <span className="text-gray-500">${option.price.toFixed(2)}</span>
-            </button>
-          ))}
-          <div className="h-8"></div>
-        </div>
+        <CreditOptions
+          creditOptions={creditOptions}
+          onSelect={handlePurchase}
+        />
       </SheetContent>
       {isOpenCrossmint && (
         <CrossmintModal
