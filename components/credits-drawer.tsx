@@ -83,7 +83,7 @@ export default function CreditsDrawer() {
           onSelect={handlePurchase}
         />
       </SheetContent>
-      {isOpenCrossmint && (
+      {isOpenCrossmint && smartWalletAddress && (
         <CrossmintModal
           onClose={() => {
             setIsOpenCrossmint(false);
