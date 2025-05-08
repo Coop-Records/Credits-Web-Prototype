@@ -13,6 +13,7 @@ import { usePrivy } from "@privy-io/react-auth";
 import CrossmintModal from "./crossmint-modal";
 import { useEthPrice } from "@/hooks/useEthPrice";
 import { CreditOptions } from "./credit-options";
+import { useSmartWallet } from "@/hooks/useSmartWallet";
 
 export default function CreditsDrawer() {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,8 +22,7 @@ export default function CreditsDrawer() {
   const [selectedQuantity, setSelectedQuantity] = useState<number>(1);
   const { authenticated, ready, login, user } = usePrivy();
   const { ethPrice } = useEthPrice();
-  const [walletInfo, setWalletInfo] = useState<any>(null);
-  const recipient = walletInfo?.smartAccounts[0]?.address ?? "";
+  const { smartWalletAddress } = useSmartWallet();
 
   const CROSSMINT_MARKUP = 1.05;
   const creditOptions = [5, 25, 100].map((amount) => ({
@@ -31,19 +31,6 @@ export default function CreditsDrawer() {
       ? Math.ceil(0.0004 * ethPrice * amount * CROSSMINT_MARKUP)
       : null,
   }));
-
-  useEffect(() => {
-    const fetchWallet = async () => {
-      if (ready && authenticated && user?.wallet?.address) {
-        const res = await fetch(`/api/wallet?owner=${user.wallet.address}`);
-        if (res.ok) {
-          const data = await res.json();
-          setWalletInfo(data);
-        }
-      }
-    };
-    fetchWallet();
-  }, [ready, authenticated, user?.wallet?.address]);
 
   const handlePurchase = (amount: number) => {
     setSelectedQuantity(amount);
@@ -102,7 +89,7 @@ export default function CreditsDrawer() {
             setIsOpenCrossmint(false);
           }}
           quantity={selectedQuantity}
-          recipient={recipient}
+          recipient={smartWalletAddress}
         />
       )}
     </Sheet>
