@@ -23,7 +23,7 @@ export default function CreditsDrawer() {
   const { authenticated, ready, login } = usePrivy();
   const { ethPrice } = useEthPrice();
   const { smartWalletAddress } = useWalletContext();
-  const { data: onchainBalance, isPending: isBalanceLoading } =
+  const { data: balance, isPending: isBalanceLoading } =
     useBalance(smartWalletAddress);
   const CROSSMINT_MARKUP = 1.05;
   const creditOptions = [5, 25, 100].map((amount) => ({
@@ -70,7 +70,7 @@ export default function CreditsDrawer() {
             </h2>
             <div className="flex items-center justify-center gap-2 text-gray-500 mt-4">
               Balance : <PlusIcon className="h-5 w-5" />{" "}
-              {isBalanceLoading ? "..." : onchainBalance}
+              {isBalanceLoading ? "..." : balance}
             </div>
             <p className="text-center mt-6 text-gray-500">
               Each song costs 1 credit.
