@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { CdpClient } from "@coinbase/cdp-sdk";
+import { getOrCreateWallet } from "@/lib/getOrCreateWallet";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
@@ -12,42 +12,8 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const cdp = new CdpClient();
-    let cleanOwner = owner.startsWith("0x") ? owner.slice(2) : owner;
-    // Truncate to the final 36 characters
-    if (cleanOwner.length > 36) {
-      cleanOwner = cleanOwner.slice(-36);
-    }
-    const name = cleanOwner;
-    try {
-      const account = await cdp.evm.getAccount({
-        name,
-      });
-      const smartAccounts = await cdp.evm.listSmartAccounts();
-      // Filter smart accounts where owners includes account.address (case-insensitive)
-      const filteredSmartAccounts = (smartAccounts.accounts || []).filter(
-        (sa: any) =>
-          (sa.owners || []).some(
-            (o: string) => o.toLowerCase() === account.address.toLowerCase()
-          )
-      );
-      return NextResponse.json({
-        owner,
-        account,
-        smartAccounts: filteredSmartAccounts,
-      });
-    } catch (error) {
-      const evmAccount = await cdp.evm.createAccount({ name });
-      const smartAccount = await cdp.evm.createSmartAccount({
-        owner: evmAccount,
-      });
-
-      return NextResponse.json({
-        owner,
-        evmAccount,
-        smartAccounts: [smartAccount],
-      });
-    }
+    const result = await getOrCreateWallet(owner);
+    return NextResponse.json(result);
   } catch (error) {
     return NextResponse.json(
       { error: (error as Error).message },
