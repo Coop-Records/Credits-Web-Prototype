@@ -20,7 +20,7 @@ export default function CreditsDrawer() {
   const [balance, setBalance] = useState(0);
   const [isOpenCrossmint, setIsOpenCrossmint] = useState(false);
   const [selectedQuantity, setSelectedQuantity] = useState<number>(1);
-  const { authenticated, ready, login, user } = usePrivy();
+  const { authenticated, ready, login } = usePrivy();
   const { ethPrice } = useEthPrice();
   const { smartWalletAddress } = useSmartWallet();
 
