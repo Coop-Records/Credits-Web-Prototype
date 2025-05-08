@@ -13,6 +13,7 @@ import { usePrivy } from "@privy-io/react-auth";
 import CrossmintModal from "./crossmint-modal";
 import { useEthPrice } from "@/hooks/useEthPrice";
 import { CreditOptions } from "./credit-options";
+import { useSmartWallet } from "@/hooks/useSmartWallet";
 
 export default function CreditsDrawer() {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,6 +22,7 @@ export default function CreditsDrawer() {
   const [selectedQuantity, setSelectedQuantity] = useState<number>(1);
   const { authenticated, ready, login } = usePrivy();
   const { ethPrice } = useEthPrice();
+  const { smartWalletAddress } = useSmartWallet();
 
   const CROSSMINT_MARKUP = 1.05;
   const creditOptions = [5, 25, 100].map((amount) => ({
@@ -81,12 +83,13 @@ export default function CreditsDrawer() {
           onSelect={handlePurchase}
         />
       </SheetContent>
-      {isOpenCrossmint && (
+      {isOpenCrossmint && smartWalletAddress && (
         <CrossmintModal
           onClose={() => {
             setIsOpenCrossmint(false);
           }}
           quantity={selectedQuantity}
+          recipient={smartWalletAddress}
         />
       )}
     </Sheet>
