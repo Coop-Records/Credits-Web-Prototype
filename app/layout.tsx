@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import PrivyProvider from "@/providers/PrivyProvider";
 import { CrossmintProvider } from "@/providers/CrossmintProvider";
+import { WalletProvider } from "@/providers/WalletProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,11 +29,13 @@ export default function RootLayout({
     <html lang="en">
       <CrossmintProvider>
         <PrivyProvider>
-          <body
-            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-          >
-            {children}
-          </body>
+          <WalletProvider>
+            <body
+              className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+            >
+              {children}
+            </body>
+          </WalletProvider>
         </PrivyProvider>
       </CrossmintProvider>
     </html>
