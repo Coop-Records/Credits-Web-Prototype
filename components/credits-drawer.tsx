@@ -23,6 +23,7 @@ export default function CreditsDrawer() {
   const { authenticated, ready, login } = usePrivy();
   const { ethPrice } = useEthPrice();
   const { smartWalletAddress } = useSmartWallet();
+  console.log("smartWalletAddress", smartWalletAddress);
 
   const CROSSMINT_MARKUP = 1.05;
   const creditOptions = [5, 25, 100].map((amount) => ({
