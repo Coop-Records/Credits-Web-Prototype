@@ -1,26 +1,25 @@
-import { useEffect, useState } from "react";
+"use client";
+
 import { usePrivy } from "@privy-io/react-auth";
+import { useQuery } from "@tanstack/react-query";
 
 export function useSmartWallet() {
   const { authenticated, ready, user } = usePrivy();
-  const [smartWalletAddress, setSmartWalletAddress] = useState<any>(null);
+  const address = user?.wallet?.address;
 
-  useEffect(() => {
-    const fetchWallet = async () => {
-      if (ready && authenticated && user?.wallet?.address) {
-        try {
-          const res = await fetch(`/api/wallet?owner=${user.wallet.address}`);
-          if (res.ok) {
-            const data = await res.json();
-            setSmartWalletAddress(data.smartAccounts?.[0]?.address);
-          }
-        } catch (err) {
-          console.error((err as Error).message);
-        }
-      }
-    };
-    fetchWallet();
-  }, [ready, authenticated, user?.wallet?.address]);
+  const { data: smartWalletAddress } = useQuery({
+    queryKey: ["smartWallet", address],
+    queryFn: async () => {
+      if (!ready || !authenticated || !address) return null;
+      const res = await fetch(`/api/wallet?owner=${address}`);
+      if (!res.ok) throw new Error("Failed to fetch smart wallet");
+      const data = await res.json();
+      return data.smartAccounts?.[0]?.address ?? null;
+    },
+    enabled: !!address && ready && authenticated,
+    refetchInterval: 15000,
+    placeholderData: null,
+  });
 
   return { smartWalletAddress };
 }

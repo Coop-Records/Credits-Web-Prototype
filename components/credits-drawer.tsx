@@ -14,16 +14,17 @@ import CrossmintModal from "./crossmint-modal";
 import { useEthPrice } from "@/hooks/useEthPrice";
 import { CreditOptions } from "./credit-options";
 import { useWalletContext } from "@/providers/WalletProvider";
+import { useBalance } from "@/hooks/useBalance";
 
 export default function CreditsDrawer() {
   const [isOpen, setIsOpen] = useState(false);
-  const [balance, setBalance] = useState(0);
   const [isOpenCrossmint, setIsOpenCrossmint] = useState(false);
   const [selectedQuantity, setSelectedQuantity] = useState<number>(1);
   const { authenticated, ready, login } = usePrivy();
   const { ethPrice } = useEthPrice();
   const { smartWalletAddress } = useWalletContext();
-
+  const { data: onchainBalance, isPending: isBalanceLoading } =
+    useBalance(smartWalletAddress);
   const CROSSMINT_MARKUP = 1.05;
   const creditOptions = [5, 25, 100].map((amount) => ({
     amount,
@@ -35,9 +36,6 @@ export default function CreditsDrawer() {
   const handlePurchase = (amount: number) => {
     setSelectedQuantity(amount);
     setIsOpenCrossmint(true);
-    // In a real app, this would trigger a payment process
-    // For demo purposes, we'll just update the balance
-    setBalance((prev) => prev + amount);
   };
 
   const handleOpenChange = (open: boolean) => {
@@ -71,7 +69,8 @@ export default function CreditsDrawer() {
               Top up with Credits
             </h2>
             <div className="flex items-center justify-center gap-2 text-gray-500 mt-4">
-              Balance : <PlusIcon className="h-5 w-5" /> {balance}
+              Balance : <PlusIcon className="h-5 w-5" />{" "}
+              {isBalanceLoading ? "..." : onchainBalance}
             </div>
             <p className="text-center mt-6 text-gray-500">
               Each song costs 1 credit.
