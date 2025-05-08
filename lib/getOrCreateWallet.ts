@@ -16,6 +16,7 @@ export async function getOrCreateWallet(owner: string) {
     );
     return { owner, account, smartAccounts: filteredSmartAccounts };
   } catch (error) {
+    console.error("Error getting account:", error);
     const evmAccount = await cdp.evm.createAccount({ name });
     const smartAccount = await cdp.evm.createSmartAccount({
       owner: evmAccount,
