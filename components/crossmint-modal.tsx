@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic";
 import SkeletonCrossmint from "./skeleton-crossmint";
+import { CROSSMINT_COLLECTION_ID } from "@/lib/consts";
 
 const CrossmintEmbeddedCheckout = dynamic(
   () =>
@@ -23,7 +24,7 @@ export default function CrossmintModal({
   quantity,
   recipient,
 }: CrossmintModalProps) {
-  const collectionLocator = `crossmint:${process.env.NEXT_PUBLIC_CROSSMINT_COLLECTION_ID}`;
+  const collectionLocator = `crossmint:${CROSSMINT_COLLECTION_ID}`;
   const callData = {
     account: recipient,
     amount: quantity,
