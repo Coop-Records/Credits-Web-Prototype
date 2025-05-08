@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Sheet,
   SheetContent,
@@ -19,8 +19,10 @@ export default function CreditsDrawer() {
   const [balance, setBalance] = useState(0);
   const [isOpenCrossmint, setIsOpenCrossmint] = useState(false);
   const [selectedQuantity, setSelectedQuantity] = useState<number>(1);
-  const { authenticated, ready, login } = usePrivy();
+  const { authenticated, ready, login, user } = usePrivy();
   const { ethPrice } = useEthPrice();
+  const [walletInfo, setWalletInfo] = useState<any>(null);
+  const recipient = walletInfo?.smartAccounts[0]?.address ?? "";
 
   const CROSSMINT_MARKUP = 1.05;
   const creditOptions = [5, 25, 100].map((amount) => ({
@@ -29,6 +31,19 @@ export default function CreditsDrawer() {
       ? Math.ceil(0.0004 * ethPrice * amount * CROSSMINT_MARKUP)
       : null,
   }));
+
+  useEffect(() => {
+    const fetchWallet = async () => {
+      if (ready && authenticated && user?.wallet?.address) {
+        const res = await fetch(`/api/wallet?owner=${user.wallet.address}`);
+        if (res.ok) {
+          const data = await res.json();
+          setWalletInfo(data);
+        }
+      }
+    };
+    fetchWallet();
+  }, [ready, authenticated, user?.wallet?.address]);
 
   const handlePurchase = (amount: number) => {
     setSelectedQuantity(amount);
@@ -87,6 +102,7 @@ export default function CreditsDrawer() {
             setIsOpenCrossmint(false);
           }}
           quantity={selectedQuantity}
+          recipient={recipient}
         />
       )}
     </Sheet>

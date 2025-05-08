@@ -1,4 +1,3 @@
-import { usePrivy } from "@privy-io/react-auth";
 import dynamic from "next/dynamic";
 import SkeletonCrossmint from "./skeleton-crossmint";
 
@@ -16,18 +15,17 @@ const CrossmintEmbeddedCheckout = dynamic(
 interface CrossmintModalProps {
   onClose: () => void;
   quantity: number;
+  recipient: string; // address
 }
 
 export default function CrossmintModal({
   onClose,
   quantity,
+  recipient,
 }: CrossmintModalProps) {
-  const { user } = usePrivy();
-  const { email } = user ?? { email: null };
-  const { address } = user?.wallet ?? { address: null };
   const collectionLocator = `crossmint:${process.env.NEXT_PUBLIC_CROSSMINT_COLLECTION_ID}`;
   const callData = {
-    account: address,
+    account: recipient,
     amount: quantity,
     totalPrice: (0.0004 * quantity).toString(),
   };
@@ -41,7 +39,7 @@ export default function CrossmintModal({
         >
           ✕
         </button>
-        {collectionLocator && callData && (address || email) && (
+        {collectionLocator && callData && recipient && (
           <CrossmintEmbeddedCheckout
             lineItems={{
               collectionLocator,
@@ -51,11 +49,7 @@ export default function CrossmintModal({
               crypto: { enabled: false },
               fiat: { enabled: true },
             }}
-            recipient={
-              address
-                ? { walletAddress: address }
-                : { email: email?.address ?? "" }
-            }
+            recipient={{ walletAddress: recipient }}
           />
         )}
       </div>
