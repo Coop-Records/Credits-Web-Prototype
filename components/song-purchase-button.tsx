@@ -31,7 +31,7 @@ export function SongPurchaseButton() {
       const data = await response.json();
       // Show toast with link to transaction
       if (data.transactionHash) {
-        toast("Event has been created.", {
+        toast("Song purchased using 1 credit.", {
           action: {
             label: "View Transaction",
             onClick: () =>
