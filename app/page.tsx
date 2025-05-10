@@ -24,7 +24,7 @@ export default function Home() {
           <p className="text-gray-500 text-center text-base">
             Purchase credits to listen to your favorite songs.
           </p>
-          {balance && balance > 0 && <SongPurchaseButton />}
+          {!!balance && <SongPurchaseButton />}
           <div className="flex justify-center mt-2">
             <CreditsDrawer
               balance={balance ?? 0}
