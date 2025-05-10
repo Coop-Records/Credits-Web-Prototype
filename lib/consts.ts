@@ -1,4 +1,4 @@
-export const IS_PROD = process.env.VERCEL_ENV === "production";
+export const IS_PROD = process.env.NEXT_PUBLIC_VERCEL_ENV === "production";
 export const CREDITS_PROTOCOL_ADDRESS = IS_PROD
   ? "0xc168b5f0549afbf40052f60b86d1a1a896612646"
   : "0x2d8CF3A448b75Bbc25cEC322be1224A9f8584115";
