@@ -81,10 +81,10 @@ export function SongMetadata() {
   }
 
   return (
-    <div className="w-full space-y-4">
+    <div className="w-full space-y-4 items-center flex flex-col">
       <h3 className="text-lg font-semibold text-center">{metadata.name}</h3>
 
-      <div className="relative aspect-square w-full overflow-hidden rounded-lg group">
+      <div className="relative aspect-square w-48 overflow-hidden rounded-lg group">
         <img
           src={metadata.image}
           alt={metadata.name}
