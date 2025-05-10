@@ -14,17 +14,21 @@ import CrossmintModal from "./crossmint-modal";
 import { useEthPrice } from "@/hooks/useEthPrice";
 import { CreditOptions } from "./credit-options";
 import { useWalletContext } from "@/providers/WalletProvider";
-import { useBalance } from "@/hooks/useBalance";
 
-export default function CreditsDrawer() {
+export default function CreditsDrawer({
+  balance,
+  isBalanceLoading,
+}: {
+  balance: number;
+  isBalanceLoading: boolean;
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenCrossmint, setIsOpenCrossmint] = useState(false);
   const [selectedQuantity, setSelectedQuantity] = useState<number>(1);
   const { authenticated, ready, login } = usePrivy();
   const { ethPrice } = useEthPrice();
   const { smartWalletAddress } = useWalletContext();
-  const { data: balance, isPending: isBalanceLoading } =
-    useBalance(smartWalletAddress);
+
   const CROSSMINT_MARKUP = 1.05;
   const creditOptions = [5, 25, 100].map((amount) => ({
     amount,
