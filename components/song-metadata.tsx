@@ -1,69 +1,18 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
-import { COLLECTION_ADDRESS } from "@/lib/consts";
-import { publicClient } from "@/lib/viem";
-import { ipfsToGateway } from "@/lib/utils";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Play, Pause } from "lucide-react";
 
-interface SongMetadata {
+export interface SongMetadata {
   name: string;
   image: string;
-  animationUrl: string;
+  animation_url: string;
 }
 
-export function SongMetadata() {
-  const [metadata, setMetadata] = useState<SongMetadata | null>(null);
+export function SongMetadata({ metadata }: { metadata?: SongMetadata }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
-
-  useEffect(() => {
-    const fetchMetadata = async () => {
-      try {
-        // Get token URI from contract
-        const uri = await publicClient.readContract({
-          address: COLLECTION_ADDRESS,
-          abi: [
-            {
-              inputs: [{ name: "tokenId", type: "uint256" }],
-              name: "uri",
-              outputs: [{ name: "", type: "string" }],
-              stateMutability: "view",
-              type: "function",
-            },
-          ],
-          functionName: "uri",
-          args: [BigInt(1)], // tokenId 1
-        });
-
-        console.log("song metadata uri", uri);
-
-        // Convert IPFS URI to gateway URL
-        const gatewayUrl = ipfsToGateway(uri as string);
-        console.log("song metadata gateway url", gatewayUrl);
-
-        // Fetch metadata from IPFS gateway
-        const response = await fetch(gatewayUrl);
-        const data = await response.json();
-        console.log("song metadata data", data);
-
-        // Convert IPFS URIs in metadata to gateway URLs
-        const processedMetadata = {
-          ...data,
-          image: ipfsToGateway(data.image),
-          animationUrl: ipfsToGateway(data.animation_url),
-        };
-        console.log("song metadata processedMetadata", processedMetadata);
-
-        setMetadata(processedMetadata);
-      } catch (error) {
-        console.error("Error fetching song metadata:", error);
-      }
-    };
-
-    fetchMetadata();
-  }, []);
 
   const togglePlay = () => {
     if (!audioRef.current) return;
@@ -107,7 +56,7 @@ export function SongMetadata() {
 
       <audio
         ref={audioRef}
-        src={metadata.animationUrl}
+        src={metadata.animation_url}
         onEnded={() => setIsPlaying(false)}
         className="hidden"
       />
