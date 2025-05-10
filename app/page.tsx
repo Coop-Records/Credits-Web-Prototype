@@ -1,3 +1,5 @@
+"use client";
+
 import CreditsDrawer from "@/components/credits-drawer";
 import { SongPurchaseButton } from "@/components/song-purchase-button";
 import LoginButton from "@/components/login-button";
