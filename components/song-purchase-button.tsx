@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { usePrivy } from "@privy-io/react-auth";
 import { toast } from "sonner";
+import { SongMetadata } from "./song-metadata";
 
 export function SongPurchaseButton() {
   const [isLoading, setIsLoading] = useState(false);
@@ -29,7 +30,6 @@ export function SongPurchaseButton() {
         throw new Error("Failed to purchase song");
       }
       const data = await response.json();
-      // Show toast with link to transaction
       if (data.transactionHash) {
         toast("Song purchased using 1 credit.", {
           action: {
@@ -50,12 +50,15 @@ export function SongPurchaseButton() {
   };
 
   return (
-    <Button
-      onClick={handlePurchase}
-      disabled={isLoading || !tokenRecipient}
-      className="w-full"
-    >
-      {isLoading ? "Purchasing..." : "Purchase Song"}
-    </Button>
+    <div className="w-full space-y-4">
+      <SongMetadata />
+      <Button
+        onClick={handlePurchase}
+        disabled={isLoading || !tokenRecipient}
+        className="w-full"
+      >
+        {isLoading ? "Purchasing..." : "Purchase Song"}
+      </Button>
+    </div>
   );
 }
