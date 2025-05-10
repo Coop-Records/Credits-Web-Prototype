@@ -3,8 +3,14 @@
 import CreditsDrawer from "@/components/credits-drawer";
 import { SongPurchaseButton } from "@/components/song-purchase-button";
 import LoginButton from "@/components/login-button";
+import { useWalletContext } from "@/providers/WalletProvider";
+import { useBalance } from "@/hooks/useBalance";
 
 export default function Home() {
+  const { smartWalletAddress } = useWalletContext();
+  const { data: balance, isPending: isBalanceLoading } =
+    useBalance(smartWalletAddress);
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-4 bg-gray-50">
       <div className="w-full max-w-md p-0 bg-white rounded-2xl shadow-md">
@@ -18,9 +24,12 @@ export default function Home() {
           <p className="text-gray-500 text-center text-base">
             Purchase credits to listen to your favorite songs.
           </p>
-          <SongPurchaseButton />
+          {balance && balance > 0 && <SongPurchaseButton />}
           <div className="flex justify-center mt-2">
-            <CreditsDrawer />
+            <CreditsDrawer
+              balance={balance ?? 0}
+              isBalanceLoading={isBalanceLoading}
+            />
           </div>
         </div>
       </div>
