@@ -4,6 +4,7 @@ import {
   COLLECTION_ADDRESS,
   CREDITS_PROTOCOL_ADDRESS,
   IS_PROD,
+  PAYMASTER_URL,
 } from "@/lib/consts";
 import { getOrCreateWallet } from "@/lib/getOrCreateWallet";
 import { Address, encodeFunctionData } from "viem";
@@ -38,7 +39,7 @@ export async function mintWithCredits(tokenRecipient: Address) {
   const sendUserOpts = {
     smartAccount,
     network: IS_PROD ? "base" : "base-sepolia",
-    paymasterUrl: process.env.CDP_PAYMASTER_URL,
+    paymasterUrl: PAYMASTER_URL,
     calls: [
       {
         to: CREDITS_PROTOCOL_ADDRESS,

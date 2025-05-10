@@ -6,6 +6,7 @@ import { usePrivy } from "@privy-io/react-auth";
 import { toast } from "sonner";
 import { SongMetadata } from "./song-metadata";
 import { useMetadata } from "@/hooks/useMetadata";
+import { IS_PROD } from "@/lib/consts";
 
 export function SongPurchaseButton() {
   const [isLoading, setIsLoading] = useState(false);
@@ -38,7 +39,9 @@ export function SongPurchaseButton() {
             label: "View Transaction",
             onClick: () =>
               window.open(
-                `https://sepolia.basescan.org/tx/${data.transactionHash}`,
+                `https://${IS_PROD ? "" : "sepolia."}basescan.org/tx/${
+                  data.transactionHash
+                }`,
                 "_blank"
               ),
           },
