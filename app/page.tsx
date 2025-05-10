@@ -1,5 +1,6 @@
 import CreditsDrawer from "@/components/credits-drawer";
 import LogoutButton from "@/components/login-button";
+import { SongPurchaseButton } from "@/components/song-purchase-button";
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
         <p className="text-gray-600 mb-6">
           Purchase credits to listen to your favorite songs.
         </p>
+        <SongPurchaseButton />
         <CreditsDrawer />
       </div>
     </main>
