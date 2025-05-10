@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { usePrivy } from "@privy-io/react-auth";
+import { toast } from "sonner";
 
 export function SongPurchaseButton() {
   const [isLoading, setIsLoading] = useState(false);
@@ -28,7 +29,19 @@ export function SongPurchaseButton() {
         throw new Error("Failed to purchase song");
       }
       const data = await response.json();
-      console.log("Song purchased successfully!", data);
+      // Show toast with link to transaction
+      if (data.transactionHash) {
+        toast("Event has been created.", {
+          action: {
+            label: "View Transaction",
+            onClick: () =>
+              window.open(
+                `https://sepolia.basescan.org/tx/${data.transactionHash}`,
+                "_blank"
+              ),
+          },
+        });
+      }
     } catch (error) {
       console.error("Error purchasing song:", error);
     } finally {
